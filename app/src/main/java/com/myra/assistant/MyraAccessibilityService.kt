@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.PowerManager
 import android.telecom.TelecomManager
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
@@ -31,12 +32,12 @@ class MyraAccessibilityService : AccessibilityService() {
 
         val pkg = event.packageName?.toString() ?: ""
 
-        // WhatsApp Autonomous Auto-Reply Engine
+        // WhatsApp Autonomous Auto-Reply
         if (autoReplyEnabled && (pkg == "com.whatsapp" || pkg == "com.whatsapp.w4b")) {
             handleWhatsAppAutomation(rootInActiveWindow)
         }
 
-        // YouTube Targeted Video Auto-Play
+        // YouTube Targeted Auto-Play
         val target = targetVideoTitle
         if (!target.isNullOrEmpty() && pkg == "com.google.android.youtube") {
             Handler(Looper.getMainLooper()).postDelayed({
@@ -47,36 +48,36 @@ class MyraAccessibilityService : AccessibilityService() {
         }
     }
 
+    // स्क्रीनशॉट लेना (Android 9+)
+    fun takeScreenCapture() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            performGlobalAction(GLOBAL_ACTION_TAKE_SCREENSHOT)
+        }
+    }
+
     private fun handleWhatsAppAutomation(root: AccessibilityNodeInfo?) {
         if (root == null) return
 
-        // अंतिम इनकमिंग मैसेज ढूँढना
         val messageNodes = root.findAccessibilityNodeInfosByViewId("com.whatsapp:id/message_text")
         if (!messageNodes.isNullOrEmpty()) {
             val lastIncomingMsg = messageNodes.last().text?.toString()?.trim() ?: ""
 
             if (lastIncomingMsg.isNotEmpty() && lastIncomingMsg != lastRepliedText) {
-                // इनपुट बॉक्स ढूँढना (Type message / Message field)
                 val inputNodes = root.findAccessibilityNodeInfosByViewId("com.whatsapp:id/entry")
                 if (!inputNodes.isNullOrEmpty()) {
                     val inputBox = inputNodes[0]
                     lastRepliedText = lastIncomingMsg
 
                     val replyText = generateAutonomousReply(lastIncomingMsg)
-
-                    // इनपुट फील्ड में टेक्स्ट पेस्ट करना
                     val args = Bundle().apply {
                         putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, replyText)
                     }
                     inputBox.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, args)
 
-                    // सेंड बटन ढूँढकर क्लिक करना
                     Handler(Looper.getMainLooper()).postDelayed({
                         val sendButtons = root.findAccessibilityNodeInfosByViewId("com.whatsapp:id/send")
                         if (!sendButtons.isNullOrEmpty()) {
                             sendButtons[0].performAction(AccessibilityNodeInfo.ACTION_CLICK)
-                        } else {
-                            clickNodeByDescription(root, "Send", "भेजें")
                         }
                     }, 500)
                 }
@@ -159,23 +160,10 @@ class MyraAccessibilityService : AccessibilityService() {
         }
     }
 
-    fun goHome() { performGlobalAction(GLOBAL_ACTION_HOME) }
-    fun goBack() { performGlobalAction(GLOBAL_ACTION_BACK) }
-
     private fun clickNodeByText(vararg texts: String) {
         val root = rootInActiveWindow ?: return
         for (text in texts) {
             val nodes = root.findAccessibilityNodeInfosByText(text)
-            if (!nodes.isNullOrEmpty()) {
-                nodes[0].performAction(AccessibilityNodeInfo.ACTION_CLICK)
-                break
-            }
-        }
-    }
-
-    private fun clickNodeByDescription(root: AccessibilityNodeInfo, vararg descs: String) {
-        for (desc in descs) {
-            val nodes = root.findAccessibilityNodeInfosByText(desc)
             if (!nodes.isNullOrEmpty()) {
                 nodes[0].performAction(AccessibilityNodeInfo.ACTION_CLICK)
                 break
