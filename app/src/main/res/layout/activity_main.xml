@@ -1,44 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="24dp"
-    android:background="#121212">
+    android:background="#050811"
+    android:padding="20dp">
 
+    <!-- Top System Status Header -->
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
+        android:gravity="center_between">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="● SYSTEM: ONLINE"
+            android:textColor="#00E5FF"
+            android:textSize="12sp"
+            android:fontFamily="monospace" />
+
+        <TextView
+            android:id="@+id/tvSettingsPrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="[ PERMISSIONS ]"
+            android:textColor="#FF007F"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:padding="6dp" />
+    </LinearLayout>
+
+    <!-- Center Glowing Arc-Reactor Core -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/reactorContainer"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:background="@drawable/jarvis_core_bg">
+
+            <TextView
+                android:id="@+id/tvCoreText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="MYRA\nCORE"
+                android:textAlignment="center"
+                android:textColor="#00E5FF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="monospace" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="&gt; INITIALIZING AI PROTOCOLS..."
+            android:textColor="#00E5FF"
+            android:textSize="14sp"
+            android:fontFamily="monospace"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <!-- Bottom Voice Listening Wave/Prompt -->
     <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="MYRA Voice Assistant"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:layout_alignParentBottom="true"
+        android:text="[ TAP CORE OR SAY COMMAND ]"
+        android:textColor="#4A5568"
+        android:textSize="11sp"
+        android:textAlignment="center"
+        android:fontFamily="monospace"
+        android:layout_marginBottom="16dp" />
 
-    <TextView
-        android:id="@+id/tvStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="बोलने के लिए माइक दबाएँ..."
-        android:textColor="#AAAAAA"
-        android:textSize="16sp" />
-
-    <Button
-        android:id="@+id/btnMic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:padding="16dp"
-        android:text="🎙️ बोलिए (Speak)"
-        android:textSize="18sp" />
-
-    <Button
-        android:id="@+id/btnPermission"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Accessibility चालू करें (कॉल कट करने के लिए)"
-        android:textSize="14sp" />
-</LinearLayout>
+</RelativeLayout>
