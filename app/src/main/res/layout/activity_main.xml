@@ -3,12 +3,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="#121212">
 
     <TextView
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="MYRA Voice Assistant"
-        android:textSize="22sp"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="बोलने के लिए माइक दबाएँ..."
+        android:textColor="#AAAAAA"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btnMic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:padding="16dp"
+        android:text="🎙️ बोलिए (Speak)"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnPermission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Accessibility चालू करें (कॉल कट करने के लिए)"
+        android:textSize="14sp" />
 </LinearLayout>
