@@ -33,6 +33,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    androidResources {
+        noCompress += listOf("tflite", "bin", "json")
+    }
 }
 
 dependencies {
