@@ -6,17 +6,17 @@
     android:padding="20dp">
 
     <!-- Top System Status Header -->
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:orientation="horizontal"
-        android:gravity="center_between">
+        android:layout_alignParentTop="true">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:text="● SYSTEM: ONLINE"
             android:textColor="#00E5FF"
             android:textSize="12sp"
@@ -27,12 +27,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:text="[ PERMISSIONS ]"
             android:textColor="#FF007F"
             android:textSize="12sp"
             android:fontFamily="monospace"
             android:padding="6dp" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <!-- Center Glowing Arc-Reactor Core -->
     <LinearLayout
@@ -73,7 +74,7 @@
             android:textAlignment="center" />
     </LinearLayout>
 
-    <!-- Bottom Voice Listening Wave/Prompt -->
+    <!-- Bottom Voice Listening Prompt -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
